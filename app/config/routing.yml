@@ -5,3 +5,7 @@ _index:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+# Lexik Paybox Bundle
+lexik_paybox:
+    resource: '@LexikPayboxBundle/Resources/config/routing.yml'

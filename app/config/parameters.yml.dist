@@ -17,3 +17,10 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # Paybox configuration
+    is_paybox_in_production: false
+    paybox_site: ~
+    paybox_rank: ~
+    paybox_login: ~
+    paybox_hmac_key: ~

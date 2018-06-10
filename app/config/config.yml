@@ -65,3 +65,13 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+# LexikPaybox Configuration
+lexik_paybox:
+    parameters:
+        production: %is_paybox_in_production%
+        site:       %paybox_site%   # Site number provided by the bank
+        rank:       %paybox_rank%       # Rank number provided by the bank
+        login:      %paybox_login% # Customer's login provided by Paybox
+        hmac:
+            key:    %paybox_hmac_key% # Key used to compute the hmac hash, provided by Paybox
