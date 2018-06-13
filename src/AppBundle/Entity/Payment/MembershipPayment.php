@@ -20,6 +20,21 @@ class MembershipPayment extends Payment
     protected $attachedJoining;
 
     /**
+     * Get referenceIdentifierPrefix.
+     *
+     * @return string
+     * @overrides
+     */
+    public function getReferenceIdentifierPrefix()
+    {
+        return sprintf("%s %s %s",
+            $this->getAttachedJoining()->getReference(),
+            $this->getAttachedJoining()->getLastname(),
+            $this->getAttachedJoining()->getFirstname()
+        );
+    }
+
+    /**
      * Set attachedRegistration.
      *
      * @param Joining $attachedJoining

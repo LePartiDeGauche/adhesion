@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AdhesionAssert;
-use AppBundle\Entity\MembershipPayment;
 
 /**
  * Joining
@@ -112,7 +111,6 @@ class Joining
      *
      * @Assert\Email(
      *     message = "L'adresse « {{ value }} » n'est pas une adresse de courriel valide.",
-     *     checkMX = true
      * )
      */
     private $email;
@@ -237,6 +235,11 @@ class Joining
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getReference()
+    {
+        return sprintf("%s%010d", $this->getIsRenewed() ? 'R' : 'A', $this->getId());
     }
 
     /**

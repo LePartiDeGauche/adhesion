@@ -35,7 +35,7 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    form_themes: ['bootstrap_4_horizontal_layout.html.twig']
+    form_themes: ['bootstrap_4_layout.html.twig']
 
 # Doctrine Configuration
 doctrine:
@@ -76,3 +76,23 @@ lexik_paybox:
         login:      %paybox_login% # Customer's login provided by Paybox
         hmac:
             key:    %paybox_hmac_key% # Key used to compute the hmac hash, provided by Paybox
+    servers:
+        system:
+            preprod:
+                protocol: 'https'
+                host: 'preprod-tpeweb.paybox.com'
+                system_path: '/php/'
+                cancellation_path: '/cgi-bin/ResAbon.cgi'
+                test_path: '/load.html'
+            primary:
+                protocol: 'https'
+                host: 'tpeweb.paybox.com'
+                system_path: '/php/'
+                cancellation_path: '/cgi-bin/ResAbon.cgi'
+                test_path: '/load.html'
+            secondary:
+                protocol: 'https'
+                host: 'tpeweb1.paybox.com'
+                system_path: '/php/'
+                cancellation_path: '/cgi-bin/ResAbon.cgi'
+                test_path: '/load.html'
