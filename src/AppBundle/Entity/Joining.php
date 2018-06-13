@@ -3,8 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraints as AdhesionAssert;
+use AppBundle\Entity\MembershipPayment;
 
 /**
  * Joining
@@ -19,6 +22,9 @@ class Joining
     const GENDER_MALE = 'M';
     const GENDER_FEMALE = 'F';
     const GENDER_UNKNOWN = '?';
+
+    const PAYMENT_MODE_ONLINE = 'online';
+    const PAYMENT_MODE_ONSITE = 'onsite';
 
     /**
      * @var int
@@ -177,9 +183,14 @@ class Joining
     private $responsabilities;
 
     /**
-     * @var int
+     * @var MembershipFee
      *
-     * @ORM\Column(name="membership_fee", type="smallint")
+     * @ORM\ManyToOne(targetEntity="MembershipFee")
+     * @ORM\JoinColumn(name="membershipfee_id",
+     *                 referencedColumnName="id",
+     *                 nullable=true,
+     *                 onDelete="SET NULL"
+     * )
      */
     private $membershipFee;
 
@@ -189,6 +200,34 @@ class Joining
      * @ORM\Column(name="comments", type="text", nullable=true)
      */
     private $comments;
+
+    /**
+     * @var MembershipPayment
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Payment\MembershipPayment", mappedBy="attachedJoining")
+     */
+    private $payments;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_mode", type="string", length=255, nullable=true)
+     */
+    private $paymentMode;
+
+    /**
+    * @var DateTime
+    *
+    * @ORM\Column(name="joining_date", type="datetime")
+    */
+    private $joiningDatetime;
+
+    public function __construct()
+    {
+        $this->joiningDatetime = new \DateTime('now');
+        $this->paymentMode = self::PAYMENT_MODE_ONLINE;
+        $this->payments = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -633,30 +672,6 @@ class Joining
     }
 
     /**
-     * Set membershipFee
-     *
-     * @param integer $membershipFee
-     *
-     * @return Joining
-     */
-    public function setMembershipFee($membershipFee)
-    {
-        $this->membershipFee = $membershipFee;
-
-        return $this;
-    }
-
-    /**
-     * Get membershipFee
-     *
-     * @return integer
-     */
-    public function getMembershipFee()
-    {
-        return $this->membershipFee;
-    }
-
-    /**
      * Set comments
      *
      * @param string $comments
@@ -702,5 +717,135 @@ class Joining
     public function getDepartment()
     {
         return $this->department;
+    }
+
+    /**
+     * Set localComitee
+     *
+     * @param string $localComitee
+     *
+     * @return Joining
+     */
+    public function setLocalComitee($localComitee)
+    {
+        $this->localComitee = $localComitee;
+
+        return $this;
+    }
+
+    /**
+     * Get localComitee
+     *
+     * @return string
+     */
+    public function getLocalComitee()
+    {
+        return $this->localComitee;
+    }
+
+    /**
+     * Set membershipFee
+     *
+     * @param \AppBundle\Entity\MembershipFee $membershipFee
+     *
+     * @return Joining
+     */
+    public function setMembershipFee(\AppBundle\Entity\MembershipFee $membershipFee = null)
+    {
+        $this->membershipFee = $membershipFee;
+
+        return $this;
+    }
+
+    /**
+     * Get membershipFee
+     *
+     * @return \AppBundle\Entity\MembershipFee
+     */
+    public function getMembershipFee()
+    {
+        return $this->membershipFee;
+    }
+
+    /**
+     * Add payment
+     *
+     * @param \AppBundle\Entity\Payment\MembershipPayment $payment
+     *
+     * @return Joining
+     */
+    public function addPayment(\AppBundle\Entity\Payment\MembershipPayment $payment)
+    {
+        $this->payments[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment
+     *
+     * @param \AppBundle\Entity\Payment\MembershipPayment $payment
+     */
+    public function removePayment(\AppBundle\Entity\Payment\MembershipPayment $payment)
+    {
+        $this->payments->removeElement($payment);
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPayments()
+    {
+        return $this->payments;
+    }
+
+    /**
+     * Set paymentMode
+     *
+     * @param string $paymentMode
+     *
+     * @return Joining
+     */
+    public function setPaymentMode($paymentMode)
+    {
+        $this->paymentMode = $paymentMode;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentMode
+     *
+     * @return string
+     */
+    public function getPaymentMode()
+    {
+        return $this->paymentMode;
+    }
+
+    /**
+     * Set joiningDatetime
+     *
+     * @param \DateTime $joiningDatetime
+     *
+     * @return Joining
+     */
+    public function setJoiningDatetime($joiningDatetime)
+    {
+        $this->joiningDatetime = $joiningDatetime;
+
+        return $this;
+    }
+
+    /**
+     * Get joiningDatetime
+     *
+     * @return \DateTime
+     */
+    public function getJoiningDatetime()
+    {
+        return $this->joiningDatetime;
     }
 }

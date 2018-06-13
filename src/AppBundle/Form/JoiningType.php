@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class JoiningType extends AbstractType
 {
@@ -97,6 +98,23 @@ class JoiningType extends AbstractType
             ->add('comments', TextareaType::class, array(
                 'label' => 'Remarques',
             ))
+            ->add('membershipFee', EntityType::class, array(
+                'class' => 'AppBundle:MembershipFee',
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Cotisation',
+            ))
+            ->add('paymentMode', ChoiceType::class, array(
+                'choices' => array(
+                    'Carte bleue ( Vous serez redirigé vers la page de paiement à la validation de l\'adhésion)' => 'online',
+                    'Par chèque ( libellé à l\'ordre du Parti de Gauche
+                                 et envoyé au siège du PG, 20-22 rue Doudeauville,
+                                 75018 PARIS, en précisant sur l\'enveloppe "Adhésion" )' => 'onsite',
+                ),
+                'expanded' => true,
+                'label' => 'Mode de paiement',
+            ));
         ;
     }
 
