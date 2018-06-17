@@ -30,10 +30,12 @@ class JoiningController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($joining);
+
             $payment = $this->createPayment($joining);
             $joining->addPayment($payment);
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($joining);
             $entityManager->persist($payment);
             $entityManager->flush();

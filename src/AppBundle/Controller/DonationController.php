@@ -31,10 +31,13 @@ class DonationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($donation);
+            $entityManager->flush();
+
             $payment = $this->createPayment($donation);
             $donation->addPayment($payment);
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($donation);
             $entityManager->persist($payment);
             $entityManager->flush();
