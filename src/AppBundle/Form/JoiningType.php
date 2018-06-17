@@ -64,7 +64,6 @@ class JoiningType extends AbstractType
             ))
             ->add('birthdate', BirthdayType::class, array(
                 'label' => 'Date de naissance',
-                'widget' => 'text'
             ))
             ->add('phoneNumber', TextType::class, array(
                 'label' => 'Téléphone fixe',
