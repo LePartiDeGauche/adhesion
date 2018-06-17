@@ -30,7 +30,7 @@ sécurisée Paybox.
         {% if paybox_enabled %}
         <form action="{{ url }}" method="post">
             {{ form_widget(form) }}
-            <input type="submit" value="Payer" />
+            <input type="submit" value="Payer {{ payment.amount }}€" />
         </form>
         {% endif %}
     </div>
