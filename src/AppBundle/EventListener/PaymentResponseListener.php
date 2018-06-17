@@ -20,7 +20,7 @@ class PaymentResponseListener
         if ($event->isVerified()) {
             $data = $event->getData();
             $ref = explode(' ', $data['Ref']);
-            $payment_id = $ref[count($ref) - 1];
+            $payment_id = (int) $ref[count($ref) - 1];
 
             $payment = $this->em->getRepository('AppBundle:Payment\Payment')->findOneById($payment_id);
             $payment->setPaymentIPN($data);
