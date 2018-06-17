@@ -13,13 +13,11 @@ use AppBundle\Entity\Payment\Payment;
 use AppBundle\Entity\Payment\DonationPayment;
 use AppBundle\Form\DonationType;
 
-/**
- * @Route(host="%donation_domain%")
- */
+
 class DonationController extends Controller
 {
     /**
-     * @Route("/", name="donation_index")
+     * @Route("/", name="donation_index", host="%donation_domain%")
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +52,7 @@ class DonationController extends Controller
     }
 
     /**
-     * @Route("/{id}/success", name="donation_success")
+     * @Route("/donation/{id}/success", name="donation_success", host="%donation_domain%")
      * @ParamConverter("donation", class="AppBundle:Donation")
      */
     public function successAction(Donation $donation)

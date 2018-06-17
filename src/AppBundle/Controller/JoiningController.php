@@ -13,13 +13,10 @@ use AppBundle\Entity\Payment\Payment;
 use AppBundle\Entity\Payment\MembershipPayment;
 use AppBundle\Form\JoiningType;
 
-/**
- * @Route("/joining")
- */
 class JoiningController extends Controller
 {
     /**
-     * @Route("/", name="joining_index")
+     * @Route("/", name="joining_index", host="%joining_domain%")
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +51,7 @@ class JoiningController extends Controller
     }
 
     /**
-     * @Route("/{id}/success", name="joining_success")
+     * @Route("/joining/{id}/success", name="joining_success", host="%joining_domain%")
      * @ParamConverter("joining", class="AppBundle:Joining")
      */
     public function successAction(Joining $joining)
