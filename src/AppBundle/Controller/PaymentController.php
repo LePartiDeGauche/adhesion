@@ -28,29 +28,31 @@ class PaymentController extends Controller
     public function payAction(Payment $payment)
     {
         if (($payment->getStatus() == Payment::STATUS_NEW || $payment->getStatus() == Payment::STATUS_PENDING) &&
-            $payment->getMethod() == Payment::METHOD_CREDIT_CARD) {
+                $payment->getMethod() == Payment::METHOD_CREDIT_CARD) {
+            $payment->setStatus(Payment::STATUS_PENDING);
             $cmdid = $payment->getReferenceIdentifierPrefix();
             $paybox = $this->get('lexik_paybox.request_handler');
             $paybox->setParameters(array(
                 'PBX_CMD' => $cmdid,
                 'PBX_DEVISE' => '978',
-                'PBX_PORTEUR' => $payment->getAttachedJoining()->getEmail(),
+                'PBX_PORTEUR' => $payment->getDrawer(),
                 'PBX_RETOUR' => 'Mt:M;Ref:R;Auto:A;Erreur:E',
                 'PBX_TOTAL' => round(100 * $payment->getAmount()),
                 'PBX_TYPEPAIEMENT' => 'CARTE',
                 'PBX_TYPECARTE' => 'CB',
                 'PBX_EFFECTUE' => $this->generateUrl('payment_paybox_return',
-                array('status' => 'success'), UrlGeneratorInterface::ABSOLUTE_URL),
+                    array('status' => 'success'), UrlGeneratorInterface::ABSOLUTE_URL),
                 'PBX_REFUSE' => $this->generateUrl('payment_paybox_return',
-                array('status' => 'denied'), UrlGeneratorInterface::ABSOLUTE_URL),
+                    array('status' => 'denied'), UrlGeneratorInterface::ABSOLUTE_URL),
                 'PBX_ANNULE' => $this->generateUrl('payment_paybox_return',
-                array('status' => 'canceled'), UrlGeneratorInterface::ABSOLUTE_URL),
-                'PBX_ATTENTE' => $this->generateUrl('payment_paybox_return', array('status' => 'pending'), UrlGeneratorInterface::ABSOLUTE_URL),
+                    array('status' => 'canceled'), UrlGeneratorInterface::ABSOLUTE_URL),
+                'PBX_ATTENTE' => $this->generateUrl('payment_paybox_return',
+                    array('status' => 'pending'), UrlGeneratorInterface::ABSOLUTE_URL),
                 'PBX_RUF1' => 'POST',
-                'PBX_REPONDRE_A' => $this->generateUrl('lexik_paybox_ipn', array('time' => time()), UrlGeneratorInterface::ABSOLUTE_URL),
+                'PBX_REPONDRE_A' => $this->generateUrl('lexik_paybox_ipn',
+                    array('time' => time()), UrlGeneratorInterface::ABSOLUTE_URL),
             ));
 
-            $payment->setStatus(Payment::STATUS_PENDING);
             $this->getDoctrine()->getManager()->persist($payment);
             $this->getDoctrine()->getManager()->flush();
 

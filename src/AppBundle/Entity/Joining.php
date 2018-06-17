@@ -202,7 +202,11 @@ class Joining
     /**
      * @var MembershipPayment
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Payment\MembershipPayment", mappedBy="attachedJoining")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Payment\MembershipPayment")
+     * @ORM\JoinTable(name="joining_payments",
+     *      joinColumns={@ORM\JoinColumn(name="joining_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="payment_id", referencedColumnName="id", unique=true)}
+     * )
      */
     private $payments;
 

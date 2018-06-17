@@ -8,83 +8,83 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use AppBundle\Entity\Joining;
+use AppBundle\Entity\Donation;
 use AppBundle\Entity\Payment\Payment;
-use AppBundle\Entity\Payment\MembershipPayment;
-use AppBundle\Form\JoiningType;
+use AppBundle\Entity\Payment\DonationPayment;
+use AppBundle\Form\DonationType;
 
 /**
- * @Route("/joining")
+ * @Route(host="%donation_domain%")
  */
-class JoiningController extends Controller
+class DonationController extends Controller
 {
     /**
-     * @Route("/", name="joining_index")
+     * @Route("/", name="donation_index")
      */
     public function indexAction(Request $request)
     {
-        $joining = new Joining();
-        $form = $this->createForm(JoiningType::class, $joining);
+        $donation = new Donation();
+        $form = $this->createForm(DonationType::class, $donation);
         $form->add('submit', SubmitType::class, array(
-            'label' => 'Adhérer',
+            'label' => 'Faire un don',
             'attr'  => array('class' => 'btn btn-default pull-right'),
         ));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $payment = $this->createPayment($joining);
-            $joining->addPayment($payment);
+            $payment = $this->createPayment($donation);
+            $donation->addPayment($payment);
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($joining);
+            $entityManager->persist($donation);
             $entityManager->persist($payment);
             $entityManager->flush();
 
-            if ($joining->getPaymentMode() == Joining::PAYMENT_MODE_ONLINE) {
+            if ($donation->getPaymentMode() == Donation::PAYMENT_MODE_ONLINE) {
                 return $this->redirectToRoute('payment_pay', array('id' => $payment->getId()));
             } else {
-                return $this->redirectToRoute('joining_success', array('id' => $joining->getId()));
+                return $this->redirectToRoute('donation_success', array('id' => $donation->getId()));
             }
         }
 
-        return $this->render('joining/index.html.twig', [
+        return $this->render('donation/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}/success", name="joining_success")
-     * @ParamConverter("joining", class="AppBundle:Joining")
+     * @Route("/{id}/success", name="donation_success")
+     * @ParamConverter("donation", class="AppBundle:Donation")
      */
-    public function successAction(Joining $joining)
+    public function successAction(Donation $donation)
     {
-        return $this->render('joining/success.html.twig', [
-            'joining' => $joining,
+        return $this->render('donation/success.html.twig', [
+            'donation' => $donation,
         ]);
     }
 
     /**
      * @return MembershipPayment
      */
-    protected function createPayment(Joining $joining)
+    protected function createPayment(Donation $donation)
     {
-        $payment = new MembershipPayment($joining);
-        $payment->setAmount($joining->getMembershipFee()->getCost())
+        $payment = new DonationPayment($donation);
+        $payment->setAmount($donation->getAmount())
             ->setStatus(Payment::STATUS_NEW)
-            ->setDrawer($joining->getEmail())
+            ->setDrawer($donation->getEmail())
             // ->setRecipient($adherent)
             ->setDate(new \DateTime('now'))
             ->setReferenceIdentifierPrefix(
                 sprintf("%s %s %s",
-                    $joining->getReference(),
-                    $joining->getLastname(),
-                    $joining->getFirstname()
+                    $donation->getReference(),
+                    $donation->getLastname(),
+                    $donation->getFirstname()
                 )
             )
         ;
 
-        if ($joining->getPaymentMode() == Joining::PAYMENT_MODE_ONLINE) {
+        if ($donation->getPaymentMode() == Donation::PAYMENT_MODE_ONLINE) {
             $payment->setMethod(Payment::METHOD_CREDIT_CARD);
         } else {
             $payment->setMethod(Payment::METHOD_CHEQUE);

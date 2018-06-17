@@ -1,0 +1,22 @@
+{% use 'form_div_layout.html.twig' with form_label as base_form_label %}
+
+{% block form_label %}
+    {{ block('base_form_label') }}
+
+    {% if required %}
+        <span class="required" title="This field is required">*</span>
+    {% endif %}
+{% endblock %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Faire un don au Parti de Gauche{% endblock %}
+
+{% block container %}
+<div class="row">
+    <div class="col-md-9">
+        <h1>Faire un don au Parti de Gauche</h1>
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}
