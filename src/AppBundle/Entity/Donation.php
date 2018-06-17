@@ -146,7 +146,7 @@ class Donation
 
     public function getReference()
     {
-        return sprintf("D%010d");
+        return sprintf("%s%010d", 'A', $this->getId());
     }
 
     /**
