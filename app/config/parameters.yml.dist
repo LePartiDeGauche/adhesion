@@ -24,3 +24,7 @@ parameters:
     paybox_rank: ~
     paybox_login: ~
     paybox_hmac_key: ~
+
+    # Host configuration
+    donation_domain: don.lepartidegauche.fr
+    joining_domain: adhesion.lepartidegauche.fr
