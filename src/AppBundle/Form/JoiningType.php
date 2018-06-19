@@ -106,8 +106,8 @@ class JoiningType extends AbstractType
             ))
             ->add('paymentMode', ChoiceType::class, array(
                 'choices' => array(
-                    'Carte bleue ( Vous serez redirigé vers la page de paiement à la validation de l\'adhésion)' => 'online',
-                    'Par chèque ( libellé à l\'ordre du Parti de Gauche
+                    'Carte bancaire ( Vous serez redirigé-e vers la page de paiement à la validation de l\'adhésion)' => 'online',
+                    'Par chèque ( libellé à l\'ordre de AFPG
                                  et envoyé au siège du PG, 20-22 rue Doudeauville,
                                  75018 PARIS, en précisant sur l\'enveloppe "Adhésion" )' => 'onsite',
                 ),
