@@ -1,0 +1,28 @@
+services:
+    app.admin.donation:
+        class: AppBundle\Admin\DonationAdmin
+        arguments: [~, AppBundle\Entity\Donation, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Enregistrements, label: Dons }
+        public: true
+
+    app.admin.joining:
+        class: AppBundle\Admin\JoiningAdmin
+        arguments: [~, AppBundle\Entity\Joining, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Enregistrements, label: Adhésion }
+        public: true
+
+    app.admin.donation_payment:
+        class: AppBundle\Admin\DonationPaymentAdmin
+        arguments: [~, AppBundle\Entity\Payment\DonationPayment, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Encaissements, label: Dons }
+        public: true
+
+    app.admin.membership_payment:
+        class: AppBundle\Admin\MembershipPaymentAdmin
+        arguments: [~, AppBundle\Entity\Payment\MembershipPayment, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Encaissements, label: Adhésion }
+        public: true
