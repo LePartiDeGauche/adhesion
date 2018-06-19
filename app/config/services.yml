@@ -32,5 +32,6 @@ services:
     AppBundle\EventListener\PaymentResponseListener:
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@logger"
         tags:
             - { name: kernel.event_listener, event: paybox.ipn_response, method: onPaymentIpnResponse }
