@@ -5,7 +5,26 @@ security:
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    btirmarche:
+                        password: $2y$12$tw9KY2wiPvAkDjckL2RfteavaG9zx0nEj0F.aDp70xvKuTHcrtate
+                        roles: 'ROLE_ADMIN'
+                    mpoprandi:
+                        password: $2y$12$QCMgbLgBVGDz/TL2oDvp/OTR9b9E44uMH9KHPC9ZYpYPgx6cBjic2
+                        roles: 'ROLE_ADMIN'
+                    adeville:
+                        password: $2y$12$s85n4CpnvUBCL/dGU3atJ.gsYp9Bod6eZC3huufwrSCNlmg6r6un.
+                        roles: 'ROLE_ADMIN'
+
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -18,7 +37,7 @@ security:
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            http_basic: ~
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
