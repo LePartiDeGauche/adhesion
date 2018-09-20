@@ -16,6 +16,9 @@ security:
                     adeville:
                         password: $2y$12$s85n4CpnvUBCL/dGU3atJ.gsYp9Bod6eZC3huufwrSCNlmg6r6un.
                         roles: 'ROLE_ADMIN'
+                    hgildaduclos:
+                        password: $2y$12$Q4VwWOJ9WOnKIHidnf5US.wP0uImjjPnjrsumrleQYeU9GWXQOs3C
+                        roles: 'ROLE_ADMIN'
 
     encoders:
         Symfony\Component\Security\Core\User\User:
