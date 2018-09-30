@@ -7,9 +7,15 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class JoiningAdmin extends AbstractAdmin
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('pdf', $this->getRouterIdParameter().'/pdf');
+    }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -46,6 +52,9 @@ class JoiningAdmin extends AbstractAdmin
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
+                    'pdf' => [
+                        'template' => 'admin/list__action_pdf.html.twig'
+                    ]
                 ],
             ])
             ->addIdentifier('lastname')
@@ -124,6 +133,7 @@ class JoiningAdmin extends AbstractAdmin
             ->add('responsabilities')
             ->add('comments')
             ->add('paymentMode')
+            ->add('membershipFee.cost')
             ->add('joiningDatetime')
         ;
     }

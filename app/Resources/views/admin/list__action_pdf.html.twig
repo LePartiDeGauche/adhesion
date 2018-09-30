@@ -1,0 +1,6 @@
+{% if admin.isGranted('PDF', object) and admin.hasRoute('pdf') %}
+    <a href="{{ admin.generateObjectUrl('pdf', object) }}" class="btn btn-sm btn-default clone_link" title="Export PDF">
+        <i class="glyphicon glyphicon-copy"></i>
+        PDF
+    </a>
+{% endif %}

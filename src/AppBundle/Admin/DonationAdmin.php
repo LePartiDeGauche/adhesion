@@ -7,9 +7,15 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class DonationAdmin extends AbstractAdmin
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('pdf', $this->getRouterIdParameter().'/pdf');
+    }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -35,6 +41,9 @@ class DonationAdmin extends AbstractAdmin
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
+                    'pdf' => [
+                        'template' => 'admin/list__action_pdf.html.twig'
+                    ]
                 ],
             ])
             ->add('id')

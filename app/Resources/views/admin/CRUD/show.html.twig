@@ -1,0 +1,18 @@
+{% extends 'admin/html_layout.html.twig' %}
+
+{% block content %}
+    <h1>
+        {% for menu in admin.breadcrumbs('show') %}
+            {% if loop.last  %}{{ menu.label }}{% endif %}
+        {% endfor %}
+    </h1>
+    <table class="table table-bordered table-striped">
+        <tbody>
+            {% for field in fields %}
+            <tr>
+                {{ field|render_view_element(object) }}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

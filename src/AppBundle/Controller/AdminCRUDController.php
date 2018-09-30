@@ -9,6 +9,37 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminCRUDController extends CRUDController
 {
+    public function pdfAction($id)
+    {
+        $object = $this->admin->getSubject();
+
+        if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id: %s', $id));
+        }
+
+        $filename = sprintf(
+            'export_%s_%s_%s.pdf',
+            strtolower($object->getLastname()),
+            strtolower($object->getFirstname()),
+            date('Y_m_d', strtotime('now'))
+        );
+
+        $html = $this->renderView('admin/CRUD/show.html.twig', [
+            'admin' => $this->admin,
+            'object' => $object,
+            'fields' => $this->admin->getShowFieldDescriptions(),
+        ]);
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $this->getPdfOptions()),
+            200,
+            [
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="' . $filename . '"'
+            ]
+        );
+    }
+
     /**
      * @param Request $request
      * @return Response
