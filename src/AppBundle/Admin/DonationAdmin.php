@@ -16,42 +16,39 @@ class DonationAdmin extends AbstractAdmin
             ->add('id')
             ->add('lastname')
             ->add('firstname')
-            ->add('address')
-            ->add('postalCode')
-            ->add('city')
-            ->add('country')
-            ->add('email')
-            ->add('phoneNumber')
-            ->add('comments')
-            ->add('amount')
+            // ->add('address')
+            // ->add('postalCode')
+            // ->add('city')
+            // ->add('country')
+            // ->add('email')
+            // ->add('phoneNumber')
+            // ->add('comments')
+            // ->add('amount')
             ->add('paymentMode')
-            ->add('createdAt')
+            // ->add('createdAt')
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('lastname')
-            ->add('firstname')
-            ->add('address')
-            ->add('postalCode')
-            ->add('city')
-            ->add('country')
-            ->add('email')
-            ->add('phoneNumber')
-            ->add('comments')
-            ->add('amount')
-            ->add('paymentMode')
-            ->add('createdAt')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
-                    'edit' => [],
-                    'delete' => [],
                 ],
             ])
+            ->add('id')
+            ->addIdentifier('lastname')
+            ->addIdentifier('firstname')
+            ->add('city')
+            ->add('country')
+            ->add('paymentMode')
+            ->add('amount')
+            ->add('createdAt', null, array(
+                'format' => 'd/m/Y',
+            ))
+            ->add('email')
+            ->add('phoneNumber')
         ;
     }
 
