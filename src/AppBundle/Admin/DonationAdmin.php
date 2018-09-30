@@ -89,4 +89,10 @@ class DonationAdmin extends AbstractAdmin
             ->add('createdAt')
         ;
     }
+
+    public function getExportFormats()
+    {
+        $formats = parent::getExportFormats();
+        return array_merge($formats, array('pdf'));
+    }
 }

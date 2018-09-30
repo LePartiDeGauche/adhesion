@@ -127,4 +127,10 @@ class JoiningAdmin extends AbstractAdmin
             ->add('joiningDatetime')
         ;
     }
+
+    public function getExportFormats()
+    {
+        $formats = parent::getExportFormats();
+        return array_merge($formats, array('pdf'));
+    }
 }

@@ -1,14 +1,14 @@
 services:
     app.admin.donation:
         class: AppBundle\Admin\DonationAdmin
-        arguments: [~, AppBundle\Entity\Donation, SonataAdminBundle:CRUD]
+        arguments: [~, AppBundle\Entity\Donation, AppBundle\Controller\AdminCRUDController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Enregistrements, label: Dons }
         public: true
 
     app.admin.joining:
         class: AppBundle\Admin\JoiningAdmin
-        arguments: [~, AppBundle\Entity\Joining, SonataAdminBundle:CRUD]
+        arguments: [~, AppBundle\Entity\Joining, AppBundle\Controller\AdminCRUDController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Enregistrements, label: Adhésion }
         public: true

@@ -26,6 +26,9 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
 
+            // PDF Export
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+
             // And finally
             new AppBundle\AppBundle(),
         ];
