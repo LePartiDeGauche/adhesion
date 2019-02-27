@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% import '@LexikPaybox/Macro/paybox.html.twig' as paybox %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1>{% block pay_base_title %}{% endblock %}</h1>
+        <div class="alert alert-success text-justify col-md-9" role="alert">
+            <p>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            {% block pay_base_registered_success_message %}{% endblock %}
+            </p>
+        </div>
+
+        <div class="alert alert-info text-justify" role="alert">
+            <p>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            {% block pay_base_online_payment_message %}{% endblock %}
+            {% if paybox_enabled %}
+                En cliquant sur Payer, vous allez être rediriger vers la plateforme de paiement
+sécurisée Paybox.
+            {% else %}
+                Ce mode de paiement est temporairement indisponible.
+                Vous serez notifié par mail lorsque celui-ci sera rétabli.
+            {% endif %}
+            </p>
+
+        </div>
+        {% if paybox_enabled %}
+        <form action="{{ url }}" method="post">
+            {{ form_widget(form) }}
+            <input type="submit" value="Payer {{ payment.amount }}€" />
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

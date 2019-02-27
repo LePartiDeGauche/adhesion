@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -39,8 +40,11 @@ class DonationType extends AbstractType
             ->add('city', TextType::class, array(
                 'label' => 'Commune',
             ))
-            ->add('country', TextType::class, array(
-                'label' => 'Pays',
+            ->add('country', CountryType::class, array(
+                'label' => 'Pays de résidence',
+            ))
+            ->add('nationality', CountryType::class, array(
+                'label' => 'Nationalité',
             ))
             ->add('email', EmailType::class, array(
                 'label' => 'Adresse de courriel',

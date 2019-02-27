@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 class JoiningAdmin extends AbstractAdmin
 {
@@ -88,7 +89,12 @@ class JoiningAdmin extends AbstractAdmin
             ->add('address')
             ->add('postalCode')
             ->add('city')
-            ->add('country')
+            ->add('country', CountryType::class, array(
+                'placeholder' => true,
+            ))
+            ->add('nationality', CountryType::class, array(
+                'placeholder' => true,
+            ))
             ->add('department')
             ->add('localComitee')
             ->add('email')
@@ -118,7 +124,8 @@ class JoiningAdmin extends AbstractAdmin
             ->add('address')
             ->add('postalCode')
             ->add('city')
-            ->add('country')
+            ->add('country', CountryType::class)
+            ->add('nationality', CountryType::class)
             ->add('department')
             ->add('localComitee')
             ->add('email')

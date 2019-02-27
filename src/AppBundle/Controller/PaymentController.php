@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Entity\Payment\Payment;
 use AppBundle\Entity\Payment\MembershipPayment;
+use AppBundle\Entity\Payment\DonationPayment;
 
 /**
  * Payment controller.
@@ -29,6 +30,7 @@ class PaymentController extends Controller
     {
         if (($payment->getStatus() == Payment::STATUS_NEW || $payment->getStatus() == Payment::STATUS_PENDING) &&
                 $payment->getMethod() == Payment::METHOD_CREDIT_CARD) {
+
             $payment->setStatus(Payment::STATUS_PENDING);
             $cmdid = $payment->getReferenceIdentifierPrefix();
             $paybox = $this->get('lexik_paybox.request_handler');
@@ -56,7 +58,11 @@ class PaymentController extends Controller
             $this->getDoctrine()->getManager()->persist($payment);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->render('payment/pay.html.twig', array(
+            $view = ($payment instanceof DonationPayment)
+                ? 'payment/pay_donation.html.twig'
+                : 'payment/pay.html.twig';
+
+            return $this->render($view, array(
                 'url' => $paybox->getUrl(),
                 'form' => $paybox->getForm()->createView(),
                 'payment' => $payment,

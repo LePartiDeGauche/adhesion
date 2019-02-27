@@ -24,6 +24,8 @@ class Joining
 
     const PAYMENT_MODE_ONLINE = 'online';
     const PAYMENT_MODE_ONSITE = 'onsite';
+    const DEFAULT_COUNTRY_CODE = 'FR';
+    const DEFAULT_NATIONALITY_CODE = 'FR';
 
     /**
      * @var int
@@ -86,9 +88,16 @@ class Joining
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=255, nullable=true)
+     * @ORM\Column(name="country", type="string", length=2, nullable=false)
      */
     private $country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nationality", type="string", length=2, nullable=false)
+     */
+    private $nationality;
 
     /**
      * @var string
@@ -229,6 +238,8 @@ class Joining
         $this->joiningDatetime = new \DateTime('now');
         $this->paymentMode = self::PAYMENT_MODE_ONLINE;
         $this->payments = new ArrayCollection();
+        $this->country = self::DEFAULT_COUNTRY_CODE;
+        $this->nationality = self::DEFAULT_NATIONALITY_CODE;
     }
 
     /**
@@ -854,5 +865,29 @@ class Joining
     public function getJoiningDatetime()
     {
         return $this->joiningDatetime;
+    }
+
+    /**
+     * Set nationality
+     *
+     * @param string $nationality
+     *
+     * @return Joining
+     */
+    public function setNationality($nationality)
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    /**
+     * Get nationality
+     *
+     * @return string
+     */
+    public function getNationality()
+    {
+        return $this->nationality;
     }
 }

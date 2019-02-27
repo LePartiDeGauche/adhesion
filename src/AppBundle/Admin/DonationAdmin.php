@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 class DonationAdmin extends AbstractAdmin
 {
@@ -70,7 +71,12 @@ class DonationAdmin extends AbstractAdmin
             ->add('address')
             ->add('postalCode')
             ->add('city')
-            ->add('country')
+            ->add('country', CountryType::class, array(
+                'placeholder' => true,
+            ))
+            ->add('nationality', CountryType::class, array(
+                'placeholder' => true,
+            ))
             ->add('email')
             ->add('phoneNumber')
             ->add('comments')
@@ -89,7 +95,8 @@ class DonationAdmin extends AbstractAdmin
             ->add('address')
             ->add('postalCode')
             ->add('city')
-            ->add('country')
+            ->add('country', CountryType::class)
+            ->add('nationality', CountryType::class)
             ->add('email')
             ->add('phoneNumber')
             ->add('comments')
